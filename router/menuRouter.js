@@ -20,7 +20,7 @@ router.get('/getallmenu',(req,res)=>{
 })
 
 // ROUTER 2: Creating the menu by POST method PATH: http://localhost:5000/api/admin/createmenu
-// STATUS: 
+// STATUS: WORKING
 router.post('/createmenu',(req,res)=>{
     let name = req.body.name;
     let image = req.body.image;
@@ -38,5 +38,48 @@ router.post('/createmenu',(req,res)=>{
 })
 });
 
+
+// ROUTER 3: Updating the menu by PUT method PATH: http://localhost:5000/api/admin/updatemenu/:id
+// STATUS: WORKING
+router.put('/updatemenu/:id',(req,res)=>{
+    let id = req.params.id;
+    let name = req.body.name;
+    let image = req.body.image;
+    
+
+    let qr = `update category 
+                    set Name = '${name}',Image = '${image}'
+                    where id = ${id}`;
+
+    dbconfig.query(qr,(err,result)=>{
+        if (err) {
+            console.log(err)
+        }
+        res.send({
+            data:result
+        });
+
+    });
+})
+
+
+// ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/deletemenu/:id
+// STATUS: WORKING
+router.delete('/deletemenu/:id',(req,res)=>{
+    let id = req.params.id
+    let qr = `delete from category 
+                where id = '${id}'`;
+
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+        res.send({
+        message:'data deleted'
+        });
+
+});
+
+})
 
 module.exports = router
