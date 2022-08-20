@@ -83,7 +83,7 @@ router.delete('/deletemenu/:id',(req,res)=>{
 })
 
 
-// ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/createitem/:id
+// ROUTER 4: Creating the item of category by POST method PATH: http://localhost:5000/api/admin/createitem/:id
 // STATUS: WORKING
 router.post('/createitem/:id',(req,res)=>{
     let category_id = req.params.id
@@ -92,7 +92,7 @@ router.post('/createitem/:id',(req,res)=>{
     let description = req.body.description;
     let price = req.body.price;
     let qr = `insert into item(category_id,Name,Description,Price,Image)
-                   values('${category_id}','${name}','${image}','${description}','${price}')`;
+                   values('${category_id}','${name}','${description}','${price}','${image}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
@@ -103,7 +103,69 @@ router.post('/createitem/:id',(req,res)=>{
         });
 
 });
+})
+
+// ROUTER 5: Get all the item of category by GET method PATH: http://localhost:5000/api/admin/getitem/:id
+// STATUS: WORKING
+router.get('/getitem/:id',(req,res)=>{
+    let category_id = req.params.id
+    let qr = `SELECT * FROM item
+                where category_id = '${category_id}'`;
+
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+        res.send({
+            data:result
+        });
+
+});
+})
+
+
+// ROUTER 6: Update the item of category by GET method PATH: http://localhost:5000/api/admin/updateitem/:id
+// STATUS: WORKING
+router.put('/updateitem/:id',(req,res)=>{
+    let id = req.params.id;
+    let name = req.body.name;
+    let image = req.body.image;
+    let description = req.body.description;
+    let price = req.body.price;
+
+    let qr = `update item 
+                    set Name = '${name}',Image = '${image}', Description ='${description}',Price=${price}
+                    where item_id = ${id}`;
+
+    dbconfig.query(qr,(err,result)=>{
+        if (err) {
+            console.log(err)
+        }
+        res.send({
+            data:result
+        });
+
+    });
+})
+
+// ROUTER 7: Delete the item of category by DELETE method PATH: http://localhost:5000/api/admin/deleteitem/:id
+// STATUS: WORKING
+router.delete('/deleteitem/:id',(req,res)=>{
+    let id = req.params.id
+    let qr = `delete from item 
+                where item_id = ${id}`;
+
+        dbconfig.query(qr,(err,result)=>{
+        if (err) {
+        console.log(err)
+        }
+        res.send({
+        message:'data deleted'
+        });
+
+});
 
 })
+
 
 module.exports = router
