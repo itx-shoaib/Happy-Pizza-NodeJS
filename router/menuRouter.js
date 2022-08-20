@@ -82,24 +82,17 @@ router.delete('/deletemenu/:id',(req,res)=>{
 
 })
 
-// ALTER TABLE `item` ADD  CONSTRAINT `FK_category` FOREIGN KEY (`item_id`) REFERENCES `category`(`ID`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-// ALTER TABLE item
-//                 ADD FOREIGN KEY (ID) REFERENCES category(ID)
-//                 where id = '${category_id}'
-//                 insert into item(Name,Description,Price,Image)
-//                 values('${name}','${image}','${description}''${price}')
+
 // ROUTER 4: Deleting the menu by DELETE method PATH: http://localhost:5000/api/admin/createitem/:id
-// STATUS: 
+// STATUS: WORKING
 router.post('/createitem/:id',(req,res)=>{
     let category_id = req.params.id
     let name = req.body.name;
     let image = req.body.image;
     let description = req.body.description;
     let price = req.body.price;
-    let qr = `SELECT category.ID, Customers.CustomerName, Orders.OrderDate
-    FROM Orders
-    INNER JOIN Customers ON Orders.CustomerID=Customers.CustomerID;`
-;
+    let qr = `insert into item(category_id,Name,Description,Price,Image)
+                   values('${category_id}','${name}','${image}','${description}','${price}')`;
 
         dbconfig.query(qr,(err,result)=>{
         if (err) {
