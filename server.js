@@ -12,7 +12,9 @@ app.use(cors());
 app.use(bodyparser.json());
 
 const menuRoute = require('./router/menuRouter')
+const orderRoute = require('./router/orderRouter')
 app.use('/api/admin', menuRoute)
+app.use('/api/admin',orderRoute)
 
 const port = process.env.PORT || 5000;
 
