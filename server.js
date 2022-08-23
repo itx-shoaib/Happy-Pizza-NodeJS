@@ -13,8 +13,10 @@ app.use(bodyparser.json());
 
 const menuRoute = require('./router/menuRouter')
 const orderRoute = require('./router/orderRouter')
+const orderitemRoute = require('./router/orderitemRouter')
 app.use('/api/admin', menuRoute)
 app.use('/api/admin',orderRoute)
+app.use('/api/admin',orderitemRoute)
 
 const port = process.env.PORT || 5000;
 
