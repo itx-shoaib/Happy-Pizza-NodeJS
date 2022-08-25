@@ -24,6 +24,27 @@ router.post('/createorderitem/:pid/:bid',(req,res)=>{
 })
 });
 
+// ROUTER 1: Creating the orderitem by POST method PATH: http://localhost:5000/api/admin/createorderitem/:pid/:bid
+// STATUS: WORKING
+router.post('/createorderitem/:pid/:bid',(req,res)=>{
+    let Product_id = req.params.pid;
+    let quantity = req.body.quantity
+    let price = req.body.price;
+    let order_id = req.params.bid
+
+    let qr = `insert into orderitem(ProductID,Quantity,Price,Order_ID)
+                    values(${Product_id},${quantity},${price},${order_id})`
+
+    dbconfig.query(qr,(err,result)=>{
+        if (err) {
+            console.log(err)
+        }
+        res.send({
+            data:result
+        })
+})
+});
+
 // ROUTER 2: Getting all orderitem by GET method PATH: http://localhost:5000/api/admin/getallorderitem
 // STATUS: WORKING
 router.get('/getallorderitem',(req,res)=>{
